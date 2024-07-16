@@ -46,7 +46,7 @@ Endpoint: `http://localhost:8081/receipts/process`
   }
 
 Response: JSON containing an id for the receipt
-{ "id": "adb6b560-0eef-42bc-9d16-df48f30e89b2" }
+{"id":"083e6fa5-f770-478c-9235-667d1af54b53"}
 
 
 # Get Points
