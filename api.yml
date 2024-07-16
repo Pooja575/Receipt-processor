@@ -1,0 +1,102 @@
+openapi: 3.0.3
+info:
+  title: Receipt Processor API
+  description: A simple receipt processing API built with Go and Docker.
+  version: 1.0.0
+
+paths:
+  /receipts/process:
+    post:
+      summary: Submits a receipt for processing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Receipt"
+      responses:
+        '200':
+          description: Returns the ID assigned to the receipt
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: adb6b560-0eef-42bc-9d16-df48f30e89b2
+
+        '400':
+          description: The receipt is invalid
+
+  /receipts/{id}/points:
+    get:
+      summary: Returns the points awarded for the receipt
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The number of points awarded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  points:
+                    type: integer
+                    example: 100
+
+        '404':
+          description: No receipt found for that id
+
+
+components:
+  schemas:
+    Receipt:
+      type: object
+      required:
+        - retailer
+        - purchaseDate
+        - purchaseTime
+        - items
+        - total
+      properties:
+        retailer:
+          type: string
+          pattern: "^[\\w\\s\\-&]+$"
+          example: "M&M Corner Market"
+        purchaseDate:
+          type: string
+          format: date
+          example: "2022-01-01"
+        purchaseTime:
+          type: string
+          format: time
+          example: "13:01"
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Item"
+        total:
+          type: string
+          pattern: "^\\d+\\.\\d{2}$"
+          example: "6.49"
+
+    Item:
+      type: object
+      required:
+        - shortDescription
+        - price
+      properties:
+        shortDescription:
+          type: string
+          pattern: "^[\\w\\s\\-]+$"
+          example: "Mountain Dew 12PK"
+        price:
+          type: string
+          pattern: "^\\d+\\.\\d{2}$"
+          example: "6.49"
