@@ -1,0 +1,7 @@
+id i received while implementing the project:
+
+
+{"id":"083e6fa5-f770-478c-9235-667d1af54b53"}
+
+
+to check in browser: http://localhost:8081/receipts/083e6fa5-f770-478c-9235-667d1af54b53/points
